@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:watchplus/app_config.dart';
+import 'package:watchplus/features/source/source_widget.dart';
 
 final config = AppConfig(
   watchmodeBaseUrl: Uri.parse('https://api.watchmode.com/v1'),
@@ -15,10 +16,37 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('WatchPlus', style: TextStyle(fontSize: 30)),
+        backgroundColor: const Color.fromARGB(255, 14, 7, 20),
+        body: SizedBox(
+          child: Column(
+            children: [
+              Container(
+                color: const Color.fromARGB(255, 60, 28, 90),
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
+                child: const Column(
+                  children: [
+                    Text(
+                      'WatchPlus',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 28, color: Colors.white),
+                    ),
+                    Text(
+                      'Sources',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: const Color.fromARGB(255, 13, 4, 22),
+                child: const Source(),
+              ),
+            ],
+          ),
         ),
       ),
     );

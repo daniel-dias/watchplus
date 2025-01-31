@@ -1,4 +1,4 @@
-package com.example.assignment
+package com.example.watchplus
 
 import io.flutter.embedding.android.FlutterActivity
 
