@@ -33,26 +33,5 @@ class Source extends StatelessWidget {
         ],
       ),
     );
-
-    // return Container(
-    //   child: Row(
-    //     children: <Widget>[
-    //       Icon(Icons.link),
-    //       SizedBox(width: 5),
-    //       InkWell(
-    //         child: Text(
-    //           source,
-    //           style: TextStyle(
-    //             color: Colors.blue,
-    //             decoration: TextDecoration.underline,
-    //           ),
-    //         ),
-    //         // onTap: () {
-    //         //   launch(sourceUrl);
-    //         // },
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

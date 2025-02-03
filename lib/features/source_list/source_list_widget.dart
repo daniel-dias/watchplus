@@ -8,8 +8,6 @@ class SourceList extends StatelessWidget {
     required this.sources,
   });
 
-  // final String? source;
-  // final String? sourceUrl;
   final String title;
   final List<Source> sources;
 
