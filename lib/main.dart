@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:watchplus/api/gen/client_index.dart';
 import 'package:watchplus/api/watchmode_api.dart';
 import 'package:watchplus/app_config.dart';
 import 'package:watchplus/screens/home/home_screen.dart';
@@ -13,13 +14,21 @@ final config = AppConfig(
   watchmodeApiKey: 'Idsv1VxxFK80sxF2ES89OlOIB2kSxmQNXj6RuPeB',
 );
 
+final WatchmodeApi watchPlusApi = createWatchmodeApi(
+  baseUrl: config.watchmodeBaseUrl,
+  apiKey: config.watchmodeApiKey,
+);
+
 void main() {
   GoRouter.optionURLReflectsImperativeAPIs = true;
-  runApp(const MainApp());
+
+  runApp(MainApp());
+
+  //watchPlusApi.sourcesGet().then(print);
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => BlocProvider(
-        create: (_) => HomeScreenCubit()..load(),
+        create: (_) => HomeScreenCubit(watchPlusApi)..load(),
         child: HomeScreen(),
       ),
     ),
@@ -53,9 +62,9 @@ final _router = GoRouter(
   ],
 );
 
-class DataHandler {
-  final ddd = createWatchmodeApi(
-    baseUrl: config.watchmodeBaseUrl,
-    apiKey: config.watchmodeApiKey,
-  );
-}
+// class DataHandler {
+//   WatchmodeApi watchPlusApi = createWatchmodeApi(
+//     baseUrl: config.watchmodeBaseUrl,
+//     apiKey: config.watchmodeApiKey,
+//   );
+// }

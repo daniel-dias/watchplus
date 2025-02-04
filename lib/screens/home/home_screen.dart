@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             case HomeScreenState.loaded:
               return buildPage();
             case HomeScreenState.error:
-              return errorUI();
+              return buildError();
           }
         },
       ),
@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget errorUI() {
+  Widget buildError() {
     return const Placeholder();
   }
 }

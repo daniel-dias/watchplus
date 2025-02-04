@@ -15,6 +15,8 @@ class ContentList extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -24,7 +26,10 @@ class ContentList extends StatelessWidget {
           pinned: true,
           expandedHeight: 120,
           flexibleSpace: FlexibleSpaceBar(
-            title: Text(id),
+            title: Text(
+              id,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
         SliverList(
