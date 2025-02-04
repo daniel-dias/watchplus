@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watchplus/features/content/content_widget.dart';
 import 'package:watchplus/features/content_list/content_list_widget.dart';
 
 class ListingScreen extends StatelessWidget {
@@ -8,29 +9,29 @@ class ListingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          height: 150,
-          padding: const EdgeInsets.all(10),
-          child: const Row(
-            children: [
-              Text(
-                '<-',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 28, color: Colors.white),
-              ),
-              Text(
-                'Name',
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 28, color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-        const ContentList(id: 1)
-      ],
-    );
+    return const ContentList(id: 1);
+    // return CustomScrollView(
+    //   slivers: [
+    //     const SliverAppBar(
+    //       pinned: true,
+    //       expandedHeight: 150,
+    //       flexibleSpace: FlexibleSpaceBar(
+    //         title: Text('Name'),
+    //       ),
+    //     ),
+    //     SliverList(
+    //       delegate: SliverChildBuilderDelegate(
+    //         (context, index) {
+    //           return const Padding(
+    //             padding:
+    //                 EdgeInsets.symmetric(vertical: 8), // Add vertical spacing
+    //             child: Content(name: 'name', label: 'label', year: 'year2'),
+    //           );
+    //         },
+    //         childCount: 20,
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 }

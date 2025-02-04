@@ -17,6 +17,8 @@ class Content extends StatelessWidget {
     return Container(
       height: 60,
       width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 47, 35, 56),
         border: Border.all(
