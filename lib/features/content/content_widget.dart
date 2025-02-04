@@ -29,11 +29,32 @@ class Content extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(name, style: const TextStyle(color: Colors.white)),
+          Text(
+            name,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+              decoration: TextDecoration.none,
+            ),
+          ),
           Row(
             children: [
-              Text(label, style: const TextStyle(color: Colors.white)),
-              Text(year, style: const TextStyle(color: Colors.white)),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+              Text(
+                year,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ],
           ),
         ],

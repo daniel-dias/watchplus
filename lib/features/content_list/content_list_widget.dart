@@ -7,7 +7,7 @@ class ContentList extends StatelessWidget {
     required this.id,
   });
 
-  final int id;
+  final String id;
   final List<Content>? contents = null;
 
   @override
@@ -23,8 +23,8 @@ class ContentList extends StatelessWidget {
           ),
           pinned: true,
           expandedHeight: 120,
-          flexibleSpace: const FlexibleSpaceBar(
-            title: Text('Name'),
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(id),
           ),
         ),
         SliverList(
