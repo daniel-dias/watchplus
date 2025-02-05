@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchplus/api/gen/watchmode_api.models.swagger.dart';
 import 'package:watchplus/features/source/source_widget.dart';
 import 'package:watchplus/features/source_list/source_list_widget.dart';
 import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     homeScreenCubit = context.read<HomeScreenCubit>();
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: BlocBuilder<HomeScreenCubit, HomeScreenState>(
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             case HomeScreenState.loaded:
-              return buildPage();
+              return buildPage(homeScreenCubit);
             case HomeScreenState.error:
               return buildError();
           }
@@ -34,7 +36,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildPage() {
+  Widget buildPage(HomeScreenCubit homeScreenCubit) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -57,57 +59,29 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        const SourceList(
-          title: 'Subscription Service',
-          sources: [
-            Source(
-              id: '1',
-              text: 'text1',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '2',
-              text: 'text2',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '3',
-              text: 'text3',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '4',
-              text: 'text4',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '5',
-              text: 'text5',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '6',
-              text: 'text6',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-          ],
-        ),
-        const SourceList(
-          title: 'Free',
-          sources: [
-            Source(
-              id: '7',
-              text: 'text7',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-            Source(
-              id: '8',
-              text: 'text8',
-              sourceUrl: 'assets/placeholder.png',
-            ),
-          ],
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(14),
+            children: homeScreenCubit.sourcesByType.entries
+                .map((entry) => buildSourceList(entry.key, entry.value))
+                .toList(),
+          ),
         ),
       ],
+    );
+  }
+
+  Widget buildSourceList(String sourceType, List<SourceSummary> sources) {
+    print(sourceType);
+    return SourceList(
+      title: sourceType,
+      sources: sources.map((element) {
+        return Source(
+          id: element.id.toString(),
+          text: element.name,
+          sourceUrl: element.logo100px,
+        );
+      }).toList(),
     );
   }
 

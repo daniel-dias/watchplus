@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:watchplus/api/gen/client_index.dart';
 import 'package:watchplus/api/watchmode_api.dart';
 import 'package:watchplus/app_config.dart';
+import 'package:watchplus/screens/contents/bloc/contents_screen_cubit.dart';
 import 'package:watchplus/screens/contents/contents_screen.dart';
-import 'package:watchplus/screens/contents/contents_screen_cubit.dart';
+import 'package:watchplus/screens/contents/data/contents_screen_repository_impl.dart';
 import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
 import 'package:watchplus/screens/home/data/home_screen_repository_impl.dart';
 import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
@@ -25,8 +26,6 @@ void main() {
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   runApp(MainApp());
-
-  //watchPlusApi.sourcesGet().then(print);
 }
 
 class MainApp extends StatelessWidget {
@@ -48,19 +47,17 @@ final _router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => HomeScreenCubit(
           HomeScreenRepositoryImpl(watchPlusApi: watchPlusApi),
-        )..load(),
+        )..getAllRails(),
         child: HomeScreen(),
       ),
     ),
     GoRoute(
       path: '/contentlist/:id',
-      // builder: (context, state) {
-      //   final id = state.pathParameters['id'];
-      //   return ContentList(id: id!);
-      // },
       builder: (context, state) => BlocProvider(
-        create: (_) => ContentsScreenCubit()..load(),
-        child: ContentsScreen(id: state.pathParameters['id']!),
+        create: (_) => ContentsScreenCubit(
+          ContentsScreenRepositoryImpl(watchPlusApi: watchPlusApi),
+        )..getAllContents(state.pathParameters['id']!, 20, 1),
+        child: ContentsScreen(),
       ),
     ),
   ],

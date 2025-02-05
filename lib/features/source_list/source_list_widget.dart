@@ -29,21 +29,6 @@ class SourceList extends StatelessWidget {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: 150,
-          //   width: double.infinity,
-          //   child: ListView.separated(
-          //     scrollDirection: Axis.horizontal,
-          //     padding: const EdgeInsets.symmetric(horizontal: 20),
-          //     itemCount: sources.length,
-          //     itemBuilder: (context, index) {
-          //       return sources[index];
-          //     },
-          //     separatorBuilder: (context, index) {
-          //       return const SizedBox(width: 10);
-          //     },
-          //   ),
-          // ),
           SingleChildScrollView(
             padding: const EdgeInsets.only(left: 20),
             scrollDirection: Axis.horizontal,

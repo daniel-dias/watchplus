@@ -7,9 +7,9 @@ class HomeScreenRepositoryImpl implements HomeScreenRepository {
   final WatchmodeApi watchPlusApi;
 
   @override
-  Future<List<SourceSummary>> getSources() async {
+  Future<List<SourceSummary>> getRepoRails() async {
     final response = await watchPlusApi.sourcesGet();
-    if (response.statusCode == 200) {
+    if (response.isSuccessful) {
       return response.body ?? [];
     } else {
       throw Exception('Failed to load sources');

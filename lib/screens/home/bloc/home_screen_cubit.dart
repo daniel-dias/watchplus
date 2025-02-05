@@ -1,9 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchplus/api/gen/watchmode_api.swagger.dart';
 import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
-// import 'package:watchplus/screens/home/bloc/home_screen_usecase_impl.dart';
 import 'package:watchplus/screens/home/domain/home_screen_usecase.dart';
-import 'package:watchplus/screens/home/home_screen.dart';
 
 enum HomeScreenState {
   loading,
@@ -13,40 +12,19 @@ enum HomeScreenState {
 
 class HomeScreenCubit extends Cubit<HomeScreenState>
     implements HomeScreenUseCase {
-  // HomeScreenCubit(this.watchPlusApi) : super(HomeScreenState.loading);
-
-  // final WatchmodeApi watchPlusApi;
-
   HomeScreenCubit(this.repository) : super(HomeScreenState.loading);
 
   final HomeScreenRepository repository;
-  //final GetSourcesUseCase getSourcesUseCase;
-
-  // void load() {
-  //   watchPlusApi.sourcesGet().then(
-  //     (sources) {
-  //       print(sources.body?.first);
-  //       emit(HomeScreenState.loaded);
-  //     },
-  //   );
-  // }
-
-  // Future<void> load() async {
-  //   final response = await watchPlusApi.sourcesGet();
-  //   if (response.isSuccessful) {
-  //     print(response.body?.first);
-  //     emit(HomeScreenState.loaded);
-  //   } else {
-  //     emit(HomeScreenState.error);
-  //   }
-  // }
+  late Map<String, List<SourceSummary>> sourcesByType;
 
   @override
-  Future<List<SourceSummary>> load() async {
-    final sources = await repository.getSources();
-    print(sources.first);
+  Future<Map<String, List<SourceSummary>>> getAllRails() async {
+    final sources = await repository.getRepoRails();
+    this.sourcesByType = groupBy(sources, (source) => source.type.name);
+
+    //print(sourcesByType.keys);
     emit(HomeScreenState.loaded);
-    return repository.getSources();
+    return sourcesByType;
 
     // CAN DO: modificate data for the screen
   }

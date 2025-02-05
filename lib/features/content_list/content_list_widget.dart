@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:watchplus/api/gen/watchmode_api.models.swagger.dart';
 import '../content/content_widget.dart';
 
 class ContentList extends StatelessWidget {
-  const ContentList({
+  const ContentList(
+    this.contents,
+    this.text,
+    this.sourceUrl, {
     super.key,
-    required this.id,
   });
 
-  final String id;
-  final List<Content>? contents = null;
+  final TitlesResult contents;
+  final String text;
+  final String sourceUrl;
 
   @override
   Widget build(BuildContext context) {
+    print(contents.titles[1]);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -27,37 +32,33 @@ class ContentList extends StatelessWidget {
           expandedHeight: 120,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
-              id,
+              this.text,
               style: const TextStyle(color: Colors.white),
+            ),
+            background: Image.network(
+              this.sourceUrl,
+              fit: BoxFit.fitHeight,
             ),
           ),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              return const Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: 8), // Add vertical spacing
-                child: Content(name: 'name', label: 'label', year: 'year2'),
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                ),
+                child: Content(
+                  name: contents.titles[index].title,
+                  label: contents.titles[index].type.value.toString(),
+                  year: contents.titles[index].year.toString(),
+                ),
               );
             },
-            childCount: 20,
+            childCount: contents.titles.length,
           ),
         ),
       ],
     );
-
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(vertical: 4),
-    //   child: ListView.separated(
-    //     itemCount: 20,
-    //     itemBuilder: (context, index) {
-    //       return const Content(name: 'name', label: 'label', year: 'year2');
-    //     },
-    //     separatorBuilder: (context, index) {
-    //       return const SizedBox(height: 12);
-    //     },
-    //   ),
-    // );
   }
 }

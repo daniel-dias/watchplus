@@ -17,7 +17,10 @@ class Source extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/contentlist/$id');
+        context.push(
+          '/contentlist/$id',
+          extra: {'text': text, 'sourceUrl': sourceUrl},
+        );
       },
       child: Container(
         width: 150,
@@ -30,11 +33,16 @@ class Source extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 10,
           children: [
-            Image.asset(
-              'assets/placeholder.png',
-              width: 75,
-              height: 75,
+            Image.network(
+              sourceUrl,
+              width: 60,
+              height: 60,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.error, color: Colors.red);
+              },
             ),
             Text(text, style: const TextStyle(color: Colors.white)),
           ],
