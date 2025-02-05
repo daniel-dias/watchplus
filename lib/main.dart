@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:watchplus/api/gen/client_index.dart';
 import 'package:watchplus/api/watchmode_api.dart';
 import 'package:watchplus/app_config.dart';
-import 'package:watchplus/screens/home/home_screen.dart';
-import 'package:watchplus/screens/home/home_screen_cubit.dart';
 import 'package:watchplus/screens/contents/contents_screen.dart';
 import 'package:watchplus/screens/contents/contents_screen_cubit.dart';
+import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
+import 'package:watchplus/screens/home/data/home_screen_repository_impl.dart';
+import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
+import 'package:watchplus/screens/home/home_screen.dart';
 
 final config = AppConfig(
   watchmodeBaseUrl: Uri.parse('https://api.watchmode.com/v1'),
@@ -44,7 +46,9 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => BlocProvider(
-        create: (_) => HomeScreenCubit(watchPlusApi)..load(),
+        create: (_) => HomeScreenCubit(
+          HomeScreenRepositoryImpl(watchPlusApi: watchPlusApi),
+        )..load(),
         child: HomeScreen(),
       ),
     ),

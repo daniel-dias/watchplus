@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchplus/features/source/source_widget.dart';
 import 'package:watchplus/features/source_list/source_list_widget.dart';
-import 'package:watchplus/screens/home/home_screen_cubit.dart';
+import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({
