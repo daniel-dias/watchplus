@@ -35,10 +35,12 @@ class ContentList extends StatelessWidget {
               this.text,
               style: const TextStyle(color: Colors.white),
             ),
-            background: Image.network(
-              this.sourceUrl,
-              fit: BoxFit.fitHeight,
-            ),
+            background: isValidUrl(this.sourceUrl)
+                ? Image.network(
+                    this.sourceUrl,
+                    fit: BoxFit.fitHeight,
+                  )
+                : null,
           ),
         ),
         SliverList(
@@ -49,9 +51,10 @@ class ContentList extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Content(
+                  id: contents.titles[index].id.toString(),
                   name: contents.titles[index].title,
-                  label: contents.titles[index].type.value.toString(),
-                  year: contents.titles[index].year.toString(),
+                  label: contents.titles[index].type.name,
+                  year: contents.titles[index].year,
                 ),
               );
             },
@@ -60,5 +63,10 @@ class ContentList extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  bool isValidUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null && (uri.isScheme('http') || uri.isScheme('https'));
   }
 }

@@ -1,5 +1,5 @@
 import 'package:watchplus/api/gen/watchmode_api.swagger.dart';
-import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
+import 'package:watchplus/screens/home/interface/home_screen_repository.dart';
 
 class HomeScreenRepositoryImpl implements HomeScreenRepository {
   HomeScreenRepositoryImpl({required this.watchPlusApi});

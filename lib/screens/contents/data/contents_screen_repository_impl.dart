@@ -1,5 +1,5 @@
 import 'package:watchplus/api/gen/watchmode_api.swagger.dart';
-import 'package:watchplus/screens/contents/domain/contents_screen_repository.dart';
+import 'package:watchplus/screens/contents/interface/contents_screen_repository.dart';
 
 class ContentsScreenRepositoryImpl implements ContentsScreenRepository {
   ContentsScreenRepositoryImpl({required this.watchPlusApi});

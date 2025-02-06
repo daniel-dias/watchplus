@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchplus/api/gen/watchmode_api.models.swagger.dart';
-import 'package:watchplus/screens/contents/domain/contents_screen_repository.dart';
-import 'package:watchplus/screens/contents/domain/contents_screen_usecase.dart';
+import 'package:watchplus/screens/contents/interface/contents_screen_repository.dart';
+import 'package:watchplus/screens/contents/interface/contents_screen_usecase.dart';
 
 enum ContentsScreenState {
   loading,

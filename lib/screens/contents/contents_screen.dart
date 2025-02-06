@@ -20,10 +20,10 @@ class ContentsScreen extends StatelessWidget {
     contentsScreenCubit = context.read<ContentsScreenCubit>();
 
     final GoRouterState state = GoRouter.of(context).state;
-    final extra = state.extra! as Map<String, String>;
+    final extra = state.extra as Map<String, String>?;
     print(extra);
-    this.text = extra['text'] as String;
-    this.sourceUrl = extra['sourceUrl'] as String;
+    this.text = extra?['text'] ?? '';
+    this.sourceUrl = extra?['sourceUrl'] ?? '';
 
     return Scaffold(
       backgroundColor: Colors.black,

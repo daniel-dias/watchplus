@@ -86,6 +86,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildError() {
-    return const Placeholder();
+    return const Center(
+      child: Text('Error Building Home Screen'),
+    );
   }
 }

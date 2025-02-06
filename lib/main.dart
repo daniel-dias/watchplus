@@ -7,14 +7,17 @@ import 'package:watchplus/app_config.dart';
 import 'package:watchplus/screens/contents/bloc/contents_screen_cubit.dart';
 import 'package:watchplus/screens/contents/contents_screen.dart';
 import 'package:watchplus/screens/contents/data/contents_screen_repository_impl.dart';
+import 'package:watchplus/screens/details/bloc/details_screen_cubit.dart';
+import 'package:watchplus/screens/details/data/details_screen_repository_impl.dart';
+import 'package:watchplus/screens/details/details_screen.dart';
 import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
 import 'package:watchplus/screens/home/data/home_screen_repository_impl.dart';
-import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
+import 'package:watchplus/screens/home/interface/home_screen_repository.dart';
 import 'package:watchplus/screens/home/home_screen.dart';
 
 final config = AppConfig(
   watchmodeBaseUrl: Uri.parse('https://api.watchmode.com/v1'),
-  watchmodeApiKey: 'Idsv1VxxFK80sxF2ES89OlOIB2kSxmQNXj6RuPeB',
+  watchmodeApiKey: '5NwgJGwThjwIh6F42ia3iRldcZxu7JndNK1nqpim',
 );
 
 final WatchmodeApi watchPlusApi = createWatchmodeApi(
@@ -56,16 +59,18 @@ final _router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => ContentsScreenCubit(
           ContentsScreenRepositoryImpl(watchPlusApi: watchPlusApi),
-        )..getAllContents(state.pathParameters['id']!, 20, 1),
+        )..getAllContents(state.pathParameters['id']!, 10, 1),
         child: ContentsScreen(),
+      ),
+    ),
+    GoRoute(
+      path: '/detail/:id',
+      builder: (context, state) => BlocProvider(
+        create: (_) => DetailsScreenCubit(
+          DetailsScreenRepositoryImpl(watchPlusApi: watchPlusApi),
+        )..getDetails(state.pathParameters['id']!),
+        child: DetailsScreen(),
       ),
     ),
   ],
 );
-
-// class DataHandler {
-//   WatchmodeApi watchPlusApi = createWatchmodeApi(
-//     baseUrl: config.watchmodeBaseUrl,
-//     apiKey: config.watchmodeApiKey,
-//   );
-// }

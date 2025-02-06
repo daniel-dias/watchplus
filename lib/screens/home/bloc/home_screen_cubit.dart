@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watchplus/api/gen/watchmode_api.swagger.dart';
-import 'package:watchplus/screens/home/domain/home_screen_repository.dart';
-import 'package:watchplus/screens/home/domain/home_screen_usecase.dart';
+import 'package:watchplus/screens/home/interface/home_screen_repository.dart';
+import 'package:watchplus/screens/home/interface/home_screen_usecase.dart';
 
 enum HomeScreenState {
   loading,
