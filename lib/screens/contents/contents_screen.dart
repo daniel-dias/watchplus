@@ -10,14 +10,12 @@ class ContentsScreen extends StatelessWidget {
   });
 
   // final String id;
-  late ContentsScreenCubit contentsScreenCubit;
+  //late ContentsScreenCubit contentsScreenCubit;
   late String text;
   late String sourceUrl;
 
   @override
   Widget build(BuildContext context) {
-    contentsScreenCubit = context.read<ContentsScreenCubit>();
-
     final GoRouterState state = GoRouter.of(context).state;
     final extra = state.extra as Map<String, String>?;
     print(extra);
@@ -27,7 +25,6 @@ class ContentsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: BlocBuilder<ContentsScreenCubit, ContentsScreenState>(
-        bloc: contentsScreenCubit,
         builder: (context, state) {
           switch (state) {
             case ContentsScreenState.loading:
@@ -35,7 +32,8 @@ class ContentsScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             case ContentsScreenState.loaded:
-              return buildPage(contentsScreenCubit);
+            case ContentsScreenState.partialloading:
+              return buildPage(context);
             case ContentsScreenState.error:
               return buildError();
           }
@@ -44,7 +42,8 @@ class ContentsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildPage(ContentsScreenCubit contentsScreenCubit) {
+  Widget buildPage(BuildContext context) {
+    final contentsScreenCubit = context.watch<ContentsScreenCubit>();
     return ContentList(contentsScreenCubit.contents, this.text, this.sourceUrl);
   }
 

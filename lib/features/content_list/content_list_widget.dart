@@ -1,25 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:watchplus/api/gen/watchmode_api.models.swagger.dart';
+import 'package:watchplus/screens/contents/bloc/contents_screen_cubit.dart';
 import '../content/content_widget.dart';
 
-class ContentList extends StatelessWidget {
-  ContentList(
+class ContentList extends StatefulWidget {
+  const ContentList(
     this.contents,
     this.text,
     this.sourceUrl, {
     super.key,
   });
 
-  //final ScrollController _scrollController = ScrollController();
-
-  final TitlesResult contents;
+  final List<TitleSummary> contents;
   final String text;
   final String sourceUrl;
 
   @override
+  State<ContentList> createState() => _ContentListState();
+}
+
+class _ContentListState extends State<ContentList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(this.contents.titles[1]);
+    //print(this.widget.contents.titles[1]);
+    // context
+    //     .read<ContentsScreenCubit>().getRemainingContents(this.widget.contents);
     return CustomScrollView(
+      controller: _scrollController,
       slivers: [
         SliverAppBar(
           backgroundColor: Colors.black,
@@ -38,12 +56,12 @@ class ContentList extends StatelessWidget {
           expandedHeight: 120,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
-              this.text,
+              this.widget.text,
               style: const TextStyle(color: Colors.white),
             ),
-            background: isValidUrl(this.sourceUrl)
+            background: isValidUrl(this.widget.sourceUrl)
                 ? Image.network(
-                    this.sourceUrl,
+                    this.widget.sourceUrl,
                     fit: BoxFit.fitHeight,
                   )
                 : null,
@@ -57,14 +75,14 @@ class ContentList extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Content(
-                  id: this.contents.titles[index].id.toString(),
-                  name: this.contents.titles[index].title,
-                  label: this.contents.titles[index].type.name,
-                  year: this.contents.titles[index].year,
+                  id: this.widget.contents[index].id.toString(),
+                  name: this.widget.contents[index].title,
+                  label: this.widget.contents[index].type.name,
+                  year: this.widget.contents[index].year,
                 ),
               );
             },
-            childCount: this.contents.titles.length,
+            childCount: this.widget.contents.length,
           ),
         ),
       ],
@@ -76,16 +94,20 @@ class ContentList extends StatelessWidget {
     return uri != null && (uri.isScheme('http') || uri.isScheme('https'));
   }
 
-  // void _onScroll() {
-  //   // if (_scrollController.position.pixels ==
-  //   //         _scrollController.position.maxScrollExtent &&
-  //   //     !_isLoading) {
-  //   //   _loadMoreItems();
-  //   // }
+  void _onScroll() {
+    // if (_scrollController.position.pixels ==
+    //         _scrollController.position.maxScrollExtent &&
+    //     !_isLoading) {
+    //   _loadMoreItems();
+    // }
 
-  //   if (_scrollController.position.pixels ==
-  //       _scrollController.position.maxScrollExtent) {
-  //     print("print more items");
-  //   }
-  // }
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      final id = GoRouterState.of(context).pathParameters['id'];
+      // Provider.of<ContentsScreenCubit>(context, listen: false)
+      //     .getMoreContents(id!);
+      context.read<ContentsScreenCubit>().getMoreContents(id!);
+      print("print more items");
+    }
+  }
 }

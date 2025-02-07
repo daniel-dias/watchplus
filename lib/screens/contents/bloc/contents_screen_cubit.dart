@@ -5,6 +5,7 @@ import 'package:watchplus/screens/contents/interface/contents_screen_usecase.dar
 
 enum ContentsScreenState {
   loading,
+  partialloading,
   loaded,
   error,
 }
@@ -14,18 +15,36 @@ class ContentsScreenCubit extends Cubit<ContentsScreenState>
   ContentsScreenCubit(this.repository) : super(ContentsScreenState.loading);
 
   final ContentsScreenRepository repository;
-  late TitlesResult contents;
+  //late TitlesResult titlesResult;
 
-  final int _total = 10;
-  final int _page = 1;
+  late List<TitleSummary> contents;
+
+  final int _resultsNumber = 10;
+  int _totalPages = 0;
+  int _page = 1;
 
   @override
-  Future<TitlesResult> getAllContents(String id) async {
-    this.contents = await repository.getRepoContents(id, _total, _page);
-    //print(contents.titles.first);
-    emit(ContentsScreenState.loaded);
-    return this.contents;
+  Future<List<TitleSummary>> getAllContents(String id) async {
+    final TitlesResult titlesResult =
+        await repository.getRepoContents(id, _resultsNumber, _page);
+    _totalPages = titlesResult.totalPages;
+    contents = titlesResult.titles;
 
-    // CAN DO: modificate data for the screen
+    emit(ContentsScreenState.loaded);
+    return contents;
+  }
+
+  @override
+  Future<List<TitleSummary>> getMoreContents(String id) async {
+    if (++_page < _totalPages) {
+      emit(ContentsScreenState.partialloading);
+      final TitlesResult titlesResult =
+          await repository.getRepoContents(id, _resultsNumber, _page);
+      contents.addAll(titlesResult.titles);
+      emit(ContentsScreenState.loaded);
+
+      return contents;
+    }
+    return contents;
   }
 }
