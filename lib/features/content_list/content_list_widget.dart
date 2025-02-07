@@ -3,12 +3,14 @@ import 'package:watchplus/api/gen/watchmode_api.models.swagger.dart';
 import '../content/content_widget.dart';
 
 class ContentList extends StatelessWidget {
-  const ContentList(
+  ContentList(
     this.contents,
     this.text,
     this.sourceUrl, {
     super.key,
   });
+
+  //final ScrollController _scrollController = ScrollController();
 
   final TitlesResult contents;
   final String text;
@@ -16,12 +18,16 @@ class ContentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(contents.titles[1]);
+    print(this.contents.titles[1]);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
+          // title: Text(
+          //   this.text,
+          //   style: const TextStyle(color: Colors.white),
+          // ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -51,14 +57,14 @@ class ContentList extends StatelessWidget {
                   vertical: 8,
                 ),
                 child: Content(
-                  id: contents.titles[index].id.toString(),
-                  name: contents.titles[index].title,
-                  label: contents.titles[index].type.name,
-                  year: contents.titles[index].year,
+                  id: this.contents.titles[index].id.toString(),
+                  name: this.contents.titles[index].title,
+                  label: this.contents.titles[index].type.name,
+                  year: this.contents.titles[index].year,
                 ),
               );
             },
-            childCount: contents.titles.length,
+            childCount: this.contents.titles.length,
           ),
         ),
       ],
@@ -69,4 +75,17 @@ class ContentList extends StatelessWidget {
     final uri = Uri.tryParse(url);
     return uri != null && (uri.isScheme('http') || uri.isScheme('https'));
   }
+
+  // void _onScroll() {
+  //   // if (_scrollController.position.pixels ==
+  //   //         _scrollController.position.maxScrollExtent &&
+  //   //     !_isLoading) {
+  //   //   _loadMoreItems();
+  //   // }
+
+  //   if (_scrollController.position.pixels ==
+  //       _scrollController.position.maxScrollExtent) {
+  //     print("print more items");
+  //   }
+  // }
 }

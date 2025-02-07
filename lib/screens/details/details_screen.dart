@@ -50,16 +50,21 @@ class DetailsScreen extends StatelessWidget {
   Widget buildPageHeader() {
     return Stack(
       children: [
-        Container(
-          height: 250,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(detailsScreenCubit.details.poster),
-              fit: BoxFit.cover,
-              opacity: 0.3,
+        if (detailsScreenCubit.details.backdrop != null)
+          Container(
+            height: 250,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(detailsScreenCubit.details.backdrop!),
+                fit: BoxFit.cover,
+                opacity: 0.3,
+              ),
             ),
+          )
+        else
+          Container(
+            height: 250,
           ),
-        ),
         Positioned(
           top: 20,
           left: 20,

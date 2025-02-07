@@ -7,7 +7,6 @@ import 'package:watchplus/screens/contents/bloc/contents_screen_cubit.dart';
 class ContentsScreen extends StatelessWidget {
   ContentsScreen({
     super.key,
-    //required this.id,
   });
 
   // final String id;
