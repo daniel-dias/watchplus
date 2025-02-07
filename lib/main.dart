@@ -12,7 +12,6 @@ import 'package:watchplus/screens/details/data/details_screen_repository_impl.da
 import 'package:watchplus/screens/details/details_screen.dart';
 import 'package:watchplus/screens/home/bloc/home_screen_cubit.dart';
 import 'package:watchplus/screens/home/data/home_screen_repository_impl.dart';
-import 'package:watchplus/screens/home/interface/home_screen_repository.dart';
 import 'package:watchplus/screens/home/home_screen.dart';
 
 final config = AppConfig(
@@ -59,7 +58,7 @@ final _router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => ContentsScreenCubit(
           ContentsScreenRepositoryImpl(watchPlusApi: watchPlusApi),
-        )..getAllContents(state.pathParameters['id']!, 10, 1),
+        )..getAllContents(state.pathParameters['id']!),
         child: ContentsScreen(),
       ),
     ),

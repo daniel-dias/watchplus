@@ -16,10 +16,13 @@ class ContentsScreenCubit extends Cubit<ContentsScreenState>
   final ContentsScreenRepository repository;
   late TitlesResult contents;
 
+  final int _total = 10;
+  final int _page = 1;
+
   @override
-  Future<TitlesResult> getAllContents(String id, int total, int page) async {
-    this.contents = await repository.getRepoContents(id, total, page);
-    print(contents.titles.first);
+  Future<TitlesResult> getAllContents(String id) async {
+    this.contents = await repository.getRepoContents(id, _total, _page);
+    //print(contents.titles.first);
     emit(ContentsScreenState.loaded);
     return this.contents;
 
